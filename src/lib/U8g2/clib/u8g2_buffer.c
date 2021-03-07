@@ -93,7 +93,7 @@ static void u8g2_send_buffer(u8g2_t *u8g2)
 void u8g2_SendBuffer(u8g2_t *u8g2)
 {
   u8g2_send_buffer(u8g2);
-  u8x8_RefreshDisplay( u8g2_GetU8x8(u8g2) );  
+  //u8x8_RefreshDisplay( u8g2_GetU8x8(u8g2) );
 }
 
 /*============================================*/

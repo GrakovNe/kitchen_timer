@@ -62,7 +62,7 @@ struct _pg_struct
 
 
 /*===========================================*/
-/* procedures, which should not be inlined (save as much flash ROM as possible */
+/* procedures, which should not be inlined (save as much update_display ROM as possible */
 
 #define PG_NOINLINE U8G2_NOINLINE
 

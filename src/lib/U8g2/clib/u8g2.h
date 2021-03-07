@@ -84,7 +84,7 @@
 
 /*
   The following macro enables the HVLine speed optimization.
-  It will consume about 40 bytes more in flash memory of the AVR.
+  It will consume about 40 bytes more in update_display memory of the AVR.
   HVLine procedures are also used by the text drawing functions.
 */
 #define U8G2_WITH_HVLINE_SPEED_OPTIMIZATION
@@ -104,7 +104,7 @@
     void u8g2_SetMaxClipWindow(u8g2_t *u8g2)
     void u8g2_SetClipWindow(u8g2_t *u8g2, u8g2_uint_t clip_x0, u8g2_uint_t clip_y0, u8g2_uint_t clip_x1, u8g2_uint_t clip_y1 )
   Setting a clip window will restrict all drawing to this window.
-  Clip window support requires about 200 bytes flash memory on AVR systems
+  Clip window support requires about 200 bytes update_display memory on AVR systems
 */
 #define U8G2_WITH_CLIP_WINDOW_SUPPORT
 
