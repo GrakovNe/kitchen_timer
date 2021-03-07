@@ -1,22 +1,59 @@
 #include <Arduino.h>
 #include "screen.h"
+#include "state.h"
+#include "mnemonics.h"
+
 #include <lib/MsTimer2/MsTimer2.h>
 
-int minutes = 30;
+int minutes = 0;
 int seconds = 10;
 
 
-void timer_tick() {
-    seconds--;
+void decrease_timer();
 
-    if (seconds == 0) {
-        minutes--;
-        seconds = 60;
+void notify_timer_out();
+
+void timer_tick() {
+    switch (device_state) {
+        case TIMER_RUN_STATE:
+            decrease_timer();
+            return;
+        case TIMER_OUT_STATE:
+            notify_timer_out();
+            return;
     }
 }
 
+void decrease_timer() {
+    seconds--;
+
+    if (seconds < 0) {
+        minutes--;
+        seconds = 59;
+    }
+
+    if (minutes < 0) {
+        minutes = 0;
+        seconds = 0;
+
+        device_state = TIMER_OUT_STATE;
+    }
+}
+
+void notify_timer_out() {
+    // buzzer here
+}
+
 void update_display() {
-    draw_timer(minutes, seconds);
+    switch (device_state) {
+        case TIMER_RUN_STATE:
+            draw_timer(minutes, seconds);
+            break;
+        case TIMER_OUT_STATE:
+            draw_timer(88, 88);
+            break;
+    }
+
     finish_screen();
 }
 
