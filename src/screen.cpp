@@ -4,6 +4,8 @@
 #include "screen.h"
 #include "glyphs.h"
 #include "state.h"
+#include "menu.h"
+#include "strings.h"
 
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
 
@@ -15,9 +17,7 @@ void init_screen() {
     u8g2.setBusClock(1000000UL);
     u8g2.begin();
     u8g2.clearDisplay();
-    //u8g2.setFont(u8g2_font_9x15B_tf);
-    //u8g2.drawStr(1, 11, "LOADING...");
-    //delay(500);
+    u8g2.setFont(u8g2_font_9x15B_tf);
 }
 
 void clear_screen() {
@@ -45,4 +45,18 @@ void draw_blinking_timer(int minutes, int seconds) {
     } else {
         clear_screen();
     }
+}
+
+void draw_adjustment_options(int active_position) {
+    clear_screen();
+
+    int bucket = active_position / 4;
+    int target = active_position % 4;
+
+    u8g2.drawStr(1, 12, get_string_by_position(4 * bucket));
+    u8g2.drawStr(1, 28, get_string_by_position(4 * bucket + 1));
+    u8g2.drawStr(1, 44, get_string_by_position(4 * bucket + 2));
+    u8g2.drawStr(1, 60, get_string_by_position(4 * bucket + 3));
+
+    u8g2.drawStr(115, 12 + 16 * target, "<");
 }

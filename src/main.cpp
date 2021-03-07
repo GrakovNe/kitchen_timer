@@ -62,6 +62,8 @@ void update_display() {
             break;
         case TIMER_PAUSED_STATE:
             draw_blinking_timer(minutes, seconds);
+        case ADJUSTMENT_STATE:
+            draw_adjustment_options(active_adjustment_position);
     }
 
     finish_screen();
@@ -73,6 +75,8 @@ void setup() {
 
     MsTimer2::set(1000, timer_tick);
     MsTimer2::start();
+
+    active_adjustment_position = 8;
 }
 
 void loop() {
