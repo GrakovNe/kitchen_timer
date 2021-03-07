@@ -3,6 +3,7 @@
 #include <Wire.h>
 #include "screen.h"
 #include "glyphs.h"
+#include "state.h"
 
 U8G2_SH1106_128X64_NONAME_F_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
 
@@ -36,4 +37,12 @@ void draw_timer(int minutes, int seconds) {
     u8g2.drawXBMP(30, TVOC_HEIGHT_OFFSET, dig_width, dig_height, digits[minutes % 10]);
     u8g2.drawXBMP(70, TVOC_HEIGHT_OFFSET, dig_width, dig_height, digits[seconds / 10]);
     u8g2.drawXBMP(100, TVOC_HEIGHT_OFFSET, dig_width, dig_height, digits[seconds % 10]);
+}
+
+void draw_blinking_timer(int minutes, int seconds) {
+    if (is_timer_blinking) {
+        draw_timer(minutes, seconds);
+    } else {
+        clear_screen();
+    }
 }

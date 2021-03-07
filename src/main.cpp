@@ -11,6 +11,8 @@ int seconds = 10;
 
 void decrease_timer();
 
+void blink_timer();
+
 void notify_timer_out();
 
 void timer_tick() {
@@ -21,6 +23,8 @@ void timer_tick() {
         case TIMER_OUT_STATE:
             notify_timer_out();
             return;
+        case TIMER_PAUSED_STATE:
+            blink_timer();
     }
 }
 
@@ -40,6 +44,10 @@ void decrease_timer() {
     }
 }
 
+void blink_timer() {
+    is_timer_blinking = !is_timer_blinking;
+}
+
 void notify_timer_out() {
     // buzzer here
 }
@@ -52,6 +60,8 @@ void update_display() {
         case TIMER_OUT_STATE:
             draw_timer(88, 88);
             break;
+        case TIMER_PAUSED_STATE:
+            draw_blinking_timer(minutes, seconds);
     }
 
     finish_screen();

@@ -14,3 +14,5 @@ void clear_screen();
 void finish_screen();
 
 void draw_timer(int minutes, int seconds);
+
+void draw_blinking_timer(int minutes, int seconds);
