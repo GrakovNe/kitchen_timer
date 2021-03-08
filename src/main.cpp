@@ -129,13 +129,18 @@ void abort_timer() {
 }
 
 void confirm_button() {
-    delay(500);
+    delay(20);
 
     if (digitalRead(CONFIRM_BUTTON_PIN)) {
         return;
     }
 
+    lazy_counter = 0;
+
     switch (device_state) {
+        case SLEEP_STATE:
+            device_state = ADJUSTMENT_STATE;
+            return;
         case ADJUSTMENT_STATE:
             run_timer(active_adjustment_position);
             return;
@@ -160,13 +165,18 @@ void increment_active_position() {
 }
 
 void incremental_button() {
-    delay(500);
+    delay(20);
 
     if (digitalRead(INCREMENTAL_BUTTON_PIN)) {
         return;
     }
 
+    lazy_counter = 0;
+
     switch (device_state) {
+        case SLEEP_STATE:
+            device_state = ADJUSTMENT_STATE;
+            return;
         case ADJUSTMENT_STATE:
             increment_active_position();
             return;
@@ -178,8 +188,6 @@ void incremental_button() {
 }
 
 void setup() {
-    pinMode(13, OUTPUT);
-    digitalWrite(13, HIGH);
 
     MsTimer2::set(1000, timer_tick);
     MsTimer2::start();
@@ -200,6 +208,7 @@ void loop() {
     if (lazy_counter > 60) {
         disable_screen();
         lazy_counter = 0;
+        device_state = SLEEP_STATE;
 
         set_sleep_mode(SLEEP_MODE_PWR_DOWN);
         sleep_mode();
